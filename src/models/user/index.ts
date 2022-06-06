@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Document } from "mongoose";
 import { deleteProperties } from "./deleteProperties";
 import { findByCredentials } from "./findByCredentials";
 import { generateAuthToken } from "./generateAuthToken";
@@ -6,13 +6,22 @@ import { preSave } from "./preSave";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-export interface IUser {
+export interface IUserDocument extends Document {
   email: string;
   name: string;
   phone: string;
   tokens: IToken[];
   password: string;
   _id: string;
+}
+
+export interface IUser extends IUserDocument {
+  generateAuthToken(this: IUserDocument): Promise<string>;
+  deleteProperties(this: IUserDocument): IUserDocument;
+}
+
+export interface IUserModel extends IUser {
+  findByCredentials(email: string, password: string): Promise<IUserDocument>;
 }
 
 interface IToken {
