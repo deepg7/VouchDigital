@@ -10,7 +10,6 @@ export interface IUser {
   email: string;
   name: string;
   phone: string;
-  address: string;
   tokens: IToken[];
   password: string;
   _id: string;
@@ -33,10 +32,6 @@ export const userSchema = new Schema<IUser>(
     phone: {
       required: true,
       unique: true,
-    },
-    address: {
-      required: true,
-      unique: false,
     },
     password: {
       required: true,

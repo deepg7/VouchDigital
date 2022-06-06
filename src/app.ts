@@ -1,9 +1,13 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, { Application } from "express";
+import userRouter from "./routers/user";
+import contactRouter from "./routers/contact";
+
 require("dotenv").config();
 require("./db");
-console.log(process.env.MONGO_URI);
+
 const app: Application = express();
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Hello World!");
-});
+
+app.use("/user", userRouter);
+app.use("/contact", contactRouter);
+
 app.listen(3000, () => console.log("Server started on port 3000"));
