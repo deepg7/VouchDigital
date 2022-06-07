@@ -1,9 +1,8 @@
 import express, { Application } from "express";
-import userRouter from "./routers/user";
-import contactRouter from "./routers/contact";
-
 require("dotenv").config();
 require("./db");
+import userRouter from "./routers/user";
+import contactRouter from "./routers/contact";
 
 const app: Application = express();
 
