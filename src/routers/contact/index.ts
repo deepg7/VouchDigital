@@ -40,16 +40,73 @@ router.post("/many", authFunction, async (req: Request, res: Response) => {
     res.send(e);
   }
 });
-
-router.get("/", authFunction, async (req: Request, res: Response) => {});
-
 //pagination here
-router.get("/many", authFunction, async (req: Request, res: Response) => {});
+router.get("/many", authFunction, async (req: Request, res: Response) => {
+  try {
+    let contacts = await contactModel.find({ userID: req.user._id });
 
-router.get("/match", authFunction, async (req: Request, res: Response) => {});
+    let page = Number(req.query.page);
+    if (!page) {
+      throw new Error("no page sent");
+    }
+    const skip = (page - 1) * 2;
+    contacts = contacts.slice(skip, skip + 2);
+    res.send(contacts);
+  } catch (e) {
+    res.send(e);
+  }
+});
 
-router.patch("/", authFunction, async (req: Request, res: Response) => {});
+router.get("/match", authFunction, async (req: Request, res: Response) => {
+  try {
+    const name = req.query.name;
+    const phone = req.query.phone;
+    const contacts = await contactModel.find({
+      $or: [
+        { name: { $regex: name, $options: "i" } },
+        { phone: { $regex: phone, $options: "i" } },
+      ],
+    });
+    res.send(contacts);
+  } catch (e) {
+    res.send(e);
+  }
+});
 
-router.delete("/", authFunction, async (req: Request, res: Response) => {});
+router.get("/:id", authFunction, async (req: Request, res: Response) => {
+  try {
+    const contact = await contactModel.findOne({
+      _id: req.params.id,
+      userID: req.user._id,
+    });
+    if (contact == null) {
+      throw new Error("Not found");
+    }
+    res.send(contact);
+  } catch (e) {
+    res.send(e);
+  }
+});
+
+router.put("/:id", authFunction, async (req: Request, res: Response) => {
+  try {
+    let contact = await contactModel.findById(req.params.id);
+    contact = { ...contact, ...req.body };
+    await contact?.save();
+    res.send(contact);
+  } catch (e) {
+    res.send(e);
+  }
+});
+
+router.delete("/:id", authFunction, async (req: Request, res: Response) => {
+  try {
+    const contact = await contactModel.findById(req.params.id);
+    await contact?.remove();
+    res.send(contact);
+  } catch (e) {
+    res.send(e);
+  }
+});
 
 export default router;
