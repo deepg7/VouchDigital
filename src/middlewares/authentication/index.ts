@@ -12,7 +12,7 @@ const authFunction = async (
   try {
     console.log("hi from auth");
     const auth = req.header("Authorization");
-    const val = !!!auth;
+    const val = !auth;
     if (val) {
       throw new Error("No authorization header");
     }

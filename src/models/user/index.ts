@@ -1,6 +1,7 @@
 import { model, Schema, Document, Model } from "mongoose";
 import { findByCredentials } from "./findByCredentials";
 import { generateAuthToken } from "./generateAuthToken";
+import postRemove from "./postRemove";
 import { preSave } from "./preSave";
 
 export interface IUserDocument extends Document {
@@ -61,6 +62,7 @@ export const userSchema = new Schema<IUser>(
 );
 
 userSchema.pre("save", preSave);
+userSchema.post("remove", postRemove);
 userSchema.methods.generateAuthToken = generateAuthToken;
 userSchema.statics.findByCredentials = findByCredentials;
 
