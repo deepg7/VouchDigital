@@ -19,6 +19,12 @@ export const contactSchema = new Schema<IContact>({
     type: String,
     required: true,
     unique: true,
+    validate: {
+      validator: function (phone: string) {
+        return /^\d{10}$/.test(phone);
+      },
+      message: `Enter a valid phone number!`,
+    },
   },
   userID: {
     type: Schema.Types.ObjectId,

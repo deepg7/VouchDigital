@@ -42,11 +42,23 @@ export const userSchema = new Schema<IUser>(
       type: String,
       required: true,
       unique: true,
+      validate: {
+        validator: function (email: string) {
+          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+        },
+        message: `Enter a valid Email address!`,
+      },
     },
     phone: {
       type: String,
       required: true,
       unique: true,
+      validate: {
+        validator: function (phone: string) {
+          return /^\d{10}$/.test(phone);
+        },
+        message: `Enter a valid phone number!`,
+      },
     },
     password: {
       type: String,
