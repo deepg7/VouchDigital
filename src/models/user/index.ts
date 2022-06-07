@@ -1,10 +1,8 @@
 import { model, Schema, Document, Model } from "mongoose";
-import { deleteProperties } from "./deleteProperties";
+// import { deleteProperties } from "./deleteProperties";
 import { findByCredentials } from "./findByCredentials";
 import { generateAuthToken } from "./generateAuthToken";
 import { preSave } from "./preSave";
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 export interface IUserDocument extends Document {
   email: string;
@@ -17,7 +15,7 @@ export interface IUserDocument extends Document {
 
 export interface IUser extends IUserDocument {
   generateAuthToken(this: IUserDocument): Promise<string>;
-  deleteProperties(this: IUserDocument): IUserDocument;
+  // deleteProperties(this: IUserDocument): IUserDocument;
 }
 
 export interface IUserModel extends Model<IUser> {
@@ -31,24 +29,29 @@ interface IToken {
 export const userSchema = new Schema<IUser>(
   {
     name: {
+      type: String,
       required: true,
       unique: false,
     },
     email: {
+      type: String,
       required: true,
       unique: true,
     },
     phone: {
+      type: String,
       required: true,
       unique: true,
     },
     password: {
+      type: String,
       required: true,
       minlength: 7,
     },
     tokens: [
       {
         token: {
+          type: String,
           required: true,
         },
       },
@@ -60,7 +63,7 @@ export const userSchema = new Schema<IUser>(
 );
 
 userSchema.pre("save", preSave);
-userSchema.methods.toJSON = deleteProperties;
+// userSchema.methods.toJSON = deleteProperties;
 userSchema.methods.generateAuthToken = generateAuthToken;
 userSchema.statics.findByCredentials = findByCredentials;
 

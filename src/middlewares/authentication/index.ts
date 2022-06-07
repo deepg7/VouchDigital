@@ -1,15 +1,19 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-const userModel = require("../models/User");
-const secret = process.env.JWT_SECRET || "";
+
+const { userModel } = require("../../models/user/index");
+const secret = "hey" || process.env.JWT_KEY || "";
+
 const authFunction = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
+    console.log("hi from auth");
     const auth = req.header("Authorization");
-    if (auth === null || auth === undefined) {
+    const val = !!!auth;
+    if (val) {
       throw new Error("No authorization header");
     }
     const token = req.header("Authorization")!.replace("Bearer ", "");
@@ -24,10 +28,11 @@ const authFunction = async (
     }
     req.user = user;
     req.token = token;
+    console.log("leaving auth function");
     next();
   } catch (e) {
     res.send(e);
   }
 };
 
-module.exports = authFunction;
+export default authFunction;

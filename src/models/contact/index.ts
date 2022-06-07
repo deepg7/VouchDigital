@@ -8,13 +8,16 @@ export interface IContact {
 }
 export const contactSchema = new Schema<IContact>({
   name: {
+    type: String,
     required: true,
   },
   phone: {
+    type: String,
     required: true,
     unique: true,
   },
   userID: {
+    type: Schema.Types.ObjectId,
     required: true,
   },
 });
