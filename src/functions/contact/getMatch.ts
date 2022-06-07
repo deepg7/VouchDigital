@@ -1,7 +1,10 @@
 //IMPORTS
 import { contactModel, IContact } from "../../models/contact";
 import { Request, Response } from "express";
-import { BAD_REQUEST_ERROR } from "../../middlewares/constants";
+import {
+  BAD_REQUEST_ERROR,
+  NOT_FOUND_ERROR,
+} from "../../middlewares/constants";
 
 //FUNCTION TO GET CONTACTS BASED ON MATCHING PATTERN
 const getMatch = async (req: Request, res: Response) => {
@@ -38,6 +41,10 @@ const getMatch = async (req: Request, res: Response) => {
         ],
       });
     }
+    if (!contacts || contacts.length === 0) {
+      return res.status(NOT_FOUND_ERROR.status).send(NOT_FOUND_ERROR.message);
+    }
+
     //RETURN CONTACTS
     res.send(contacts);
   } catch (e) {

@@ -1,6 +1,9 @@
 import { contactModel } from "../../models/contact";
 import { Request, Response } from "express";
-import { BAD_REQUEST_ERROR } from "../../middlewares/constants";
+import {
+  BAD_REQUEST_ERROR,
+  NOT_FOUND_ERROR,
+} from "../../middlewares/constants";
 
 const getMany = async (req: Request, res: Response) => {
   try {
@@ -19,6 +22,10 @@ const getMany = async (req: Request, res: Response) => {
     const skip = (page - 1) * 5;
     contacts = contacts.slice(skip, skip + 5);
 
+    //CHECK IF CONTACTS EXIST
+    if (!contacts || contacts.length === 0) {
+      return res.status(NOT_FOUND_ERROR.status).send(NOT_FOUND_ERROR.message);
+    }
     //SEND PAGINATED CONTACTS
     res.send(contacts);
   } catch (e) {
