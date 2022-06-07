@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 const { userModel } = require("../../models/user/index");
+
 const secret = process.env.JWT_KEY || "";
 
 const authFunction = async (
@@ -10,19 +11,17 @@ const authFunction = async (
   next: NextFunction
 ) => {
   try {
-    console.log("hi from auth");
     const auth = req.header("Authorization");
     const val = !auth;
     if (val) {
       throw new Error("No authorization header");
     }
-    const token = req.header("Authorization")!.replace("Bearer ", "");
+    const token = auth.replace("Bearer ", "");
     const { _id } = jwt.verify(token, secret) as JwtPayload;
     const user = await userModel.findOne({
       _id,
       "tokens.token": token,
     });
-
     if (!user) {
       throw new Error("not found");
     }
