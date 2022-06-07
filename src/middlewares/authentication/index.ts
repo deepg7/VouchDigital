@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 const { userModel } = require("../../models/user/index");
-const secret = "hey" || process.env.JWT_KEY || "";
+const secret = process.env.JWT_KEY || "";
 
 const authFunction = async (
   req: Request,

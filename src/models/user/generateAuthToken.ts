@@ -2,7 +2,7 @@ import { IUser, userModel, userSchema } from ".";
 import jwt from "jsonwebtoken";
 import { HydratedDocument } from "mongoose";
 
-const secret = "hey" || process.env.JWT_KEY || "";
+const secret = process.env.JWT_KEY || "";
 
 export const generateAuthToken = async function (
   this: HydratedDocument<IUser>
