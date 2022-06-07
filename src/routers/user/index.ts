@@ -1,27 +1,40 @@
-import { Router, Request, Response } from "express";
+//IMPORTING ROUTER FROM EXPRESS
+import { Router } from "express";
+
+//IMPORTING ROUTE CONTROLLER FUNCTIONS
+import deleteUser from "../../functions/user/delete";
 import login from "../../functions/user/login";
 import logout from "../../functions/user/logout";
 import logoutAll from "../../functions/user/logoutAll";
 import signup from "../../functions/user/signup";
-import authFunction from "../../middlewares/authentication";
-import { userModel } from "../../models/user";
+import updateUser from "../../functions/user/update";
 
+//IMPORTING MIDDLEWARE AUTH FUNCTION
+import authFunction from "../../middlewares/authentication";
+
+//CREATING INSTANCE OF ROUTER
 const router = Router();
 
+//ROUTE THAT IS USED FOR SIGNUP OF USER
 router.post("/signup", signup);
 
+//ROUTE FOR LOGIN
 router.get("/login", login);
 
+//ROUTER USES AUTHFUNCTION AS MIDDLEWARE FOR ALL ROUTES HENCEFORTH
 router.use(authFunction);
 
+//ROUTE FOR LOGGING OUT
 router.post("/logout", logout);
 
+//ROUTE FOR LOGGING OUT OF ALL DEVICES
 router.post("/logoutAll", logoutAll);
 
-router.patch("/updateProfile", (req: Request, res: Response) => {
-  res.send(req.user);
-});
+//ROUTE TO UPDATE USER
+router.patch("/:id", updateUser);
 
-router.delete("/deteteProfile", async (req: Request, res: Response) => {});
+//ROUTE TO DELETE USER
+router.delete("/:id", deleteUser);
 
+//EXPORTING THE ROUTER
 export default router;
