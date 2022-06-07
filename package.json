@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "node dist/server.js",
     "build": "tsc -p .",
-    "dev": "nodemon src/app.ts"
+    "dev": "nodemon src/server.ts"
   },
   "author": "Deep Gandhi",
   "license": "ISC",
