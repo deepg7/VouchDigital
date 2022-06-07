@@ -1,4 +1,4 @@
-import { model, Schema, Document } from "mongoose";
+import { model, Schema, Document, Model } from "mongoose";
 import { deleteProperties } from "./deleteProperties";
 import { findByCredentials } from "./findByCredentials";
 import { generateAuthToken } from "./generateAuthToken";
@@ -20,8 +20,8 @@ export interface IUser extends IUserDocument {
   deleteProperties(this: IUserDocument): IUserDocument;
 }
 
-export interface IUserModel extends IUser {
-  findByCredentials(email: string, password: string): Promise<IUserDocument>;
+export interface IUserModel extends Model<IUser> {
+  findByCredentials(email: string, password: string): Promise<IUser>;
 }
 
 interface IToken {
@@ -64,4 +64,4 @@ userSchema.methods.toJSON = deleteProperties;
 userSchema.methods.generateAuthToken = generateAuthToken;
 userSchema.statics.findByCredentials = findByCredentials;
 
-export const userModel = model<IUser>("User", userSchema);
+export const userModel = model<IUser, IUserModel>("User", userSchema);

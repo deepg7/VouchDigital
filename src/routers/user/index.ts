@@ -4,16 +4,29 @@ import { userModel } from "../../models/user";
 const router = Router();
 
 router.post("/signup", async (req: Request, res: Response) => {
-  const user = new userModel(req.body);
-
   try {
+    const user = new userModel(req.body);
     const token = await user.generateAuthToken();
-
+    res.send({ user, token });
     console.log(token);
-  } catch (e) {}
+  } catch (e) {
+    res.send(e);
+  }
 });
 
-router.get("/login", async (req: Request, res: Response) => {});
+router.get("/login", async (req: Request, res: Response) => {
+  try {
+    const user = await userModel.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
+    const token = await user.generateAuthToken();
+    res.send({ user, token });
+    console.log(token);
+  } catch (e) {
+    res.send(e);
+  }
+});
 
 router.post("/logout", async (req: Request, res: Response) => {});
 
