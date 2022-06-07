@@ -1,5 +1,4 @@
 import { model, Schema, Document, Model } from "mongoose";
-// import { deleteProperties } from "./deleteProperties";
 import { findByCredentials } from "./findByCredentials";
 import { generateAuthToken } from "./generateAuthToken";
 import { preSave } from "./preSave";
@@ -15,7 +14,6 @@ export interface IUserDocument extends Document {
 
 export interface IUser extends IUserDocument {
   generateAuthToken(this: IUserDocument): Promise<string>;
-  // deleteProperties(this: IUserDocument): IUserDocument;
 }
 
 export interface IUserModel extends Model<IUser> {
@@ -63,7 +61,6 @@ export const userSchema = new Schema<IUser>(
 );
 
 userSchema.pre("save", preSave);
-// userSchema.methods.toJSON = deleteProperties;
 userSchema.methods.generateAuthToken = generateAuthToken;
 userSchema.statics.findByCredentials = findByCredentials;
 

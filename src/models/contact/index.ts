@@ -4,7 +4,7 @@ export interface IContact {
   name: string;
   phone: string;
   address?: string;
-  userID: ObjectId;
+  userID?: ObjectId;
 }
 export const contactSchema = new Schema<IContact>({
   name: {
