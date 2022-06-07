@@ -1,11 +1,15 @@
-import mongoose, { model, Schema, Types, ObjectId } from "mongoose";
+//MONGOOSE IMPORTS
+import { model, Schema, ObjectId } from "mongoose";
 
+//CONTACT INTERFACE
 export interface IContact {
   name: string;
   phone: string;
   address?: string;
   userID?: ObjectId;
 }
+
+//CONTACT SCHEMA
 export const contactSchema = new Schema<IContact>({
   name: {
     type: String,
@@ -22,6 +26,8 @@ export const contactSchema = new Schema<IContact>({
   },
 });
 
+//INDEX FOR A USER NOT SAVING SAME NUMBER TWO TIMES
 contactSchema.index({ userID: 1, phone: 1 }, { unique: true });
 
+//EXPORTING MODEL
 export const contactModel = model<IContact>("Contact", contactSchema);
