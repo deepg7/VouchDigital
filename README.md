@@ -21,3 +21,9 @@
 - 1 user can have many contacts
 - Attributes are basic name phone email etc
 - I have added transaction control and pre/post hooks wherever necessary
+
+## dummy credentials
+
+email:dd@gmail.com
+password:1234567
+auth token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmEwMzExZTE3MzgzMzdkY2NmNzU0MTUiLCJpYXQiOjE2NTQ2NjcwODB9.zEuIt3d8sQ0iD005siwwHHY6ayYLnFIR8LecL9HGyZA
