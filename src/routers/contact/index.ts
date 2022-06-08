@@ -8,7 +8,7 @@ import getMany from "../../functions/contact/getMany";
 import getMatch from "../../functions/contact/getMatch";
 import post from "../../functions/contact/post";
 import postMany from "../../functions/contact/postMany";
-import put from "../../functions/contact/put";
+import patch from "../../functions/contact/patch";
 
 //IMPORTING THE AUTHENTICATION MIDDLEWARE FUNCTION
 import authFunction from "../../middlewares/authentication";
@@ -35,7 +35,7 @@ router.get("/match", getMatch);
 router.get("/:id", getContact);
 
 //ROUTE TO UPDATE PARTICULAR CONTACT BY ID
-router.put("/:id", put);
+router.put("/:id", patch);
 
 //ROUTE TO DELETE PARTICULAR CONTACT BY ID
 router.delete("/:id", deleteContact);

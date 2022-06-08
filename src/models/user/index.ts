@@ -1,4 +1,5 @@
 //IMPORTS
+import { Request, Response } from "express";
 import { model, Schema, Document, Model } from "mongoose";
 import { findByCredentials } from "./findByCredentials";
 import { generateAuthToken } from "./generateAuthToken";
@@ -22,7 +23,12 @@ export interface IUser extends IUserDocument {
 
 //USER INTERFACE WITH STATICS
 export interface IUserModel extends Model<IUser> {
-  findByCredentials(email: string, password: string): Promise<IUser>;
+  findByCredentials(
+    email: string,
+    password: string,
+    req: Request,
+    res: Response
+  ): Promise<IUser>;
 }
 
 //TYPE OF TOKEN ARRAY IN USER

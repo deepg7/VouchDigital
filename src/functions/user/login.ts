@@ -9,7 +9,9 @@ const login = async (req: Request, res: Response) => {
     //FIND USER BY CREDENTIALS
     const user = await userModel.findByCredentials(
       req.body.email,
-      req.body.password
+      req.body.password,
+      req,
+      res
     );
     //GENERATE AUTH TOKEN
     const token = await user.generateAuthToken();
@@ -20,10 +22,10 @@ const login = async (req: Request, res: Response) => {
         .status(AUTHENTICATION_ERROR.status)
         .send(AUTHENTICATION_ERROR.message);
     }
-    res.send({ user, token });
+    return res.send({ user, token });
   } catch (e) {
     //SEND ERROR FOR ANY OTHER UNEXPECTED ERRORS
-    res.send(e);
+    return res.send(e);
   }
 };
 
