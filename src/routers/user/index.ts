@@ -34,7 +34,7 @@ router.post("/logoutAll", logoutAll);
 router.patch("/:id", updateUser);
 
 //ROUTE TO DELETE USER
-router.delete("/:id", deleteUser);
+router.delete("/", deleteUser);
 
 //EXPORTING THE ROUTER
 export default router;
